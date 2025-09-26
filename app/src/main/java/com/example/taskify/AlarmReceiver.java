@@ -1,4 +1,4 @@
-package com.example.todolist;
+package com.example.taskify;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,3 +13,5 @@ public class AlarmReceiver extends BroadcastReceiver {
         Toast.makeText(context, "Reminder: " + title, Toast.LENGTH_LONG).show();
     }
 }
+
+

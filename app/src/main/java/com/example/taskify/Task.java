@@ -1,6 +1,7 @@
-package com.example.todolist;
+package com.example.taskify;
 
 public class Task {
+    private long id;
     private String name, category, priority, dueDate, dueTime, status;
     private int score;
 
@@ -15,6 +16,8 @@ public class Task {
     }
 
     // Getters and setters
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
     public String getName() { return name; }
     public String getCategory() { return category; }
     public String getPriority() { return priority; }
@@ -24,4 +27,7 @@ public class Task {
     public int getScore() { return score; }
 
     public void setStatus(String status) { this.status = status; }
+    public void setScore(int score) { this.score = score; }
 }
+
+

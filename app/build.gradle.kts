@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.todolist"
+    namespace = "com.example.taskify"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.todolist"
+        applicationId = "com.example.taskify"
         minSdk = 27
         targetSdk = 34
         versionCode = 1

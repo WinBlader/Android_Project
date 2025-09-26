@@ -1,13 +1,18 @@
-package com.example.todolist;
+package com.example.taskify;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
@@ -31,7 +36,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = taskList.get(position);
         holder.taskName.setText(task.getName());
-        holder.taskDetails.setText(task.getCategory() + " | " + task.getPriority() + " | " + task.getDueDate() + " " + task.getDueTime());
+        String dayOfWeek = getDayOfWeek(task.getDueDate());
+        holder.taskDetails.setText(task.getCategory() + " | " + task.getPriority() + " | " + dayOfWeek + ", " + task.getDueDate() + " " + task.getDueTime());
         holder.taskStatus.setText("Status: " + task.getStatus());
 
         // Set status color
@@ -46,6 +52,40 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 holder.taskStatus.setTextColor(Color.parseColor("#F44336"));
                 break;
         }
+
+        holder.btnMarkComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TaskDBHelper db = new TaskDBHelper(context);
+                db.updateTaskStatusAndScore(task.getId(), "Completed", 1);
+                task.setStatus("Completed");
+                task.setScore(1);
+                notifyItemChanged(holder.getAdapterPosition());
+            }
+        });
+
+        holder.btnMarkFailed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TaskDBHelper db = new TaskDBHelper(context);
+                db.updateTaskStatusAndScore(task.getId(), "Failed", 0);
+                task.setStatus("Failed");
+                task.setScore(0);
+                notifyItemChanged(holder.getAdapterPosition());
+            }
+        });
+    }
+
+    private String getDayOfWeek(String dateString){
+        // Expecting dd/MM/yyyy
+        SimpleDateFormat input = new SimpleDateFormat("d/M/yyyy");
+        SimpleDateFormat output = new SimpleDateFormat("EEE");
+        try{
+            Date date = input.parse(dateString);
+            return output.format(date);
+        }catch (ParseException e){
+            return "";
+        }
     }
 
     @Override
@@ -55,11 +95,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     static class TaskViewHolder extends RecyclerView.ViewHolder{
         TextView taskName, taskDetails, taskStatus;
+        Button btnMarkComplete, btnMarkFailed;
         public TaskViewHolder(@NonNull View itemView){
             super(itemView);
             taskName = itemView.findViewById(R.id.taskName);
             taskDetails = itemView.findViewById(R.id.taskDetails);
             taskStatus = itemView.findViewById(R.id.taskStatus);
+            btnMarkComplete = itemView.findViewById(R.id.btnMarkComplete);
+            btnMarkFailed = itemView.findViewById(R.id.btnMarkFailed);
         }
     }
 }
+
+

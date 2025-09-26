@@ -13,7 +13,8 @@
             android:id="@+id/etTaskName"
             android:hint="Task Name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"/>
 
         <EditText
             android:id="@+id/etTaskCategory"
@@ -49,6 +50,7 @@
             android:text="Save Task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/primary"/>
     </LinearLayout>
 </ScrollView>

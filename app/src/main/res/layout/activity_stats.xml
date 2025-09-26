@@ -9,12 +9,12 @@
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="380dp"/>
 
     <TextView
         android:id="@+id/tvScore"
-        android:text="Score: 0"
-        android:textSize="18sp"
+        android:text="Completed: 0  Pending: 0  Failed: 0"
+        android:textSize="20sp"
         android:layout_marginTop="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

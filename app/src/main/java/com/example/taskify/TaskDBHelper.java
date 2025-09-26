@@ -1,4 +1,4 @@
-package com.example.todolist;
+package com.example.taskify;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -75,10 +75,21 @@ public class TaskDBHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndexOrThrow(COL_STATUS)),
                         cursor.getInt(cursor.getColumnIndexOrThrow(COL_SCORE))
                 );
+                task.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COL_ID)));
                 taskList.add(task);
             }while(cursor.moveToNext());
         }
         cursor.close();
         return taskList;
     }
+
+    public int updateTaskStatusAndScore(long id, String status, int score){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_STATUS, status);
+        values.put(COL_SCORE, score);
+        return db.update(TABLE_TASKS, values, COL_ID + "= ?", new String[]{String.valueOf(id)});
+    }
 }
+
+
