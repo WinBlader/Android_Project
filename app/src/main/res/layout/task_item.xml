@@ -47,21 +47,26 @@
             <Button
                 android:id="@+id/btnMarkComplete"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="Complete"
-                android:backgroundTint="@color/primary"/>
+                android:backgroundTint="@color/primary"
+                android:textSize="12sp"
+                android:padding="8dp"/>
 
             <Space
                 android:layout_width="8dp"
                 android:layout_height="wrap_content"/>
 
             <Button
-                android:id="@+id/btnMarkFailed"
+                android:id="@+id/btnDelete"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="Failed"/>
+                android:text="Delete"
+                android:backgroundTint="@color/design_default_color_error"
+                android:textSize="12sp"
+                android:padding="8dp"/>
         </LinearLayout>
 
     </LinearLayout>

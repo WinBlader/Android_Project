@@ -19,10 +19,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     private Context context;
     private List<Task> taskList;
+    private OnTaskDeleteListener deleteListener;
+
+    public interface OnTaskDeleteListener {
+        void onTaskDeleted(int position);
+    }
 
     public TaskAdapter(Context context, List<Task> taskList){
         this.context = context;
         this.taskList = taskList;
+    }
+
+    public void setOnTaskDeleteListener(OnTaskDeleteListener listener) {
+        this.deleteListener = listener;
     }
 
     @NonNull
@@ -64,14 +73,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             }
         });
 
-        holder.btnMarkFailed.setOnClickListener(new View.OnClickListener() {
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TaskDBHelper db = new TaskDBHelper(context);
-                db.updateTaskStatusAndScore(task.getId(), "Failed", 0);
-                task.setStatus("Failed");
-                task.setScore(0);
-                notifyItemChanged(holder.getAdapterPosition());
+                db.deleteTask(task.getId());
+                int position = holder.getAdapterPosition();
+                taskList.remove(position);
+                notifyItemRemoved(position);
+                if (deleteListener != null) {
+                    deleteListener.onTaskDeleted(position);
+                }
             }
         });
     }
@@ -95,14 +108,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     static class TaskViewHolder extends RecyclerView.ViewHolder{
         TextView taskName, taskDetails, taskStatus;
-        Button btnMarkComplete, btnMarkFailed;
+        Button btnMarkComplete, btnDelete;
         public TaskViewHolder(@NonNull View itemView){
             super(itemView);
             taskName = itemView.findViewById(R.id.taskName);
             taskDetails = itemView.findViewById(R.id.taskDetails);
             taskStatus = itemView.findViewById(R.id.taskStatus);
             btnMarkComplete = itemView.findViewById(R.id.btnMarkComplete);
-            btnMarkFailed = itemView.findViewById(R.id.btnMarkFailed);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 }

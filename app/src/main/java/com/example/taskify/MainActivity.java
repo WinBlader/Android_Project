@@ -50,10 +50,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dbHelper = new TaskDBHelper(this);
+        // Check for overdue tasks and mark them as failed
+        dbHelper.markOverdueTasksAsFailed();
         taskList = dbHelper.getAllTasks();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskAdapter = new TaskAdapter(this, taskList);
+        taskAdapter.setOnTaskDeleteListener(new TaskAdapter.OnTaskDeleteListener() {
+            @Override
+            public void onTaskDeleted(int position) {
+                updateHeaderCounts();
+            }
+        });
         recyclerView.setAdapter(taskAdapter);
         updateHeaderCounts();
 
@@ -71,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Check for overdue tasks and mark them as failed
+        dbHelper.markOverdueTasksAsFailed();
+        
         // Refresh task list after returning from AddTaskActivity
         taskList.clear();
         taskList.addAll(dbHelper.getAllTasks());
