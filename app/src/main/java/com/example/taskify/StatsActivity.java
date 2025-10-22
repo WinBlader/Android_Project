@@ -24,6 +24,10 @@ public class StatsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Apply theme before setting content view
+        ThemeManager.getInstance(this).applyTheme(this);
+        
         setContentView(R.layout.activity_stats);
 
         pieChart = findViewById(R.id.pieChart);

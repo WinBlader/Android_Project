@@ -12,6 +12,8 @@
 - **🔄 Auto-Failure**: Tasks automatically mark as failed when past due
 - **📈 Statistics**: View completion rates and task analytics
 - **🎨 Modern UI**: Clean, Material Design interface
+- **🌗 Theme Toggle**: Light / Dark / System theme switch with persistence
+- **🟦 App Icon**: Adaptive launcher icon with custom Taskify logo
 
 ## 🚀 Getting Started
 
@@ -44,6 +46,9 @@
 4. **Completing Tasks**: Tap "Complete" when you finish a task
 5. **Deleting Tasks**: Tap "Delete" to remove unwanted tasks
 6. **Viewing Stats**: Access statistics through the menu
+7. **Theme Toggle**: Tap the gear icon in the top app bar to cycle:
+   - Light → Dark → System (follows device)
+   - Choice is saved and applied across all screens
 
 ## 🏗️ Project Structure
 
@@ -69,6 +74,7 @@ app/
 - **Language**: Java
 - **Database**: SQLite with custom helper
 - **UI Framework**: Material Design Components
+- **Theming**: Material3 DayNight with persistent theme preference
 - **Architecture**: Traditional Android with Activities
 - **Minimum SDK**: API 21 (Android 5.0)
 - **Target SDK**: Latest Android version

@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import com.google.android.material.appbar.MaterialToolbar;
 import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,10 +27,16 @@ public class MainActivity extends AppCompatActivity {
     private List<Task> taskList;
     private View contentContainer;
     private TextView tvCompletedCount, tvPendingCount, tvFailedCount;
+    private ThemeManager themeManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Initialize theme manager and apply saved theme
+        themeManager = ThemeManager.getInstance(this);
+        themeManager.applyTheme(this);
+        
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerViewTasks);
@@ -43,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_info) {
                     startActivity(new Intent(MainActivity.this, StatsActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.action_theme) {
+                    toggleTheme();
                     return true;
                 }
                 return false;
@@ -99,6 +110,27 @@ public class MainActivity extends AppCompatActivity {
         if (tvCompletedCount != null) tvCompletedCount.setText("Completed: " + completed);
         if (tvPendingCount != null) tvPendingCount.setText("Pending: " + pending);
         if (tvFailedCount != null) tvFailedCount.setText("Failed: " + failed);
+    }
+    
+    private void toggleTheme() {
+        int currentMode = themeManager.getThemeMode();
+        int newMode;
+        String message;
+        
+        if (currentMode == ThemeManager.THEME_LIGHT) {
+            newMode = ThemeManager.THEME_DARK;
+            message = "Switched to Dark Mode";
+        } else if (currentMode == ThemeManager.THEME_DARK) {
+            newMode = ThemeManager.THEME_SYSTEM;
+            message = "Switched to System Theme";
+        } else {
+            newMode = ThemeManager.THEME_LIGHT;
+            message = "Switched to Light Mode";
+        }
+        
+        themeManager.setThemeMode(newMode);
+        recreate(); // Restart activity to apply new theme
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
 

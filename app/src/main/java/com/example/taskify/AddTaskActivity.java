@@ -26,6 +26,10 @@ public class AddTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Apply theme before setting content view
+        ThemeManager.getInstance(this).applyTheme(this);
+        
         setContentView(R.layout.activity_add_task);
 
         etTaskName = findViewById(R.id.etTaskName);

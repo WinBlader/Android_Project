@@ -10,10 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/primary"
-        app:title="Taskify: A goal tracker app"
-        app:titleCentered="true"
-        app:titleTextColor="@android:color/white"
-        app:navigationIconTint="@android:color/white"
+        app:logo="@drawable/ic_taskify_logo"
+        app:logoGravity="start"
+        app:title="Taskify"
+        app:titleCentered="false"
+        app:titleTextColor="@color/toolbar_text"
+        app:navigationIconTint="@color/toolbar_icon"
         app:menu="@menu/menu_main"/>
 
     <LinearLayout
