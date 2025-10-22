@@ -107,7 +107,14 @@ public class AddTaskActivity extends AppCompatActivity {
                 long id = dbHelper.addTask(task);
 
                 if (id > 0) {
-                    Toast.makeText(AddTaskActivity.this, "Task added", Toast.LENGTH_SHORT).show();
+                    // Set the task ID for alarm scheduling
+                    task.setId(id);
+                    
+                    // Schedule alarm reminder (5 minutes before due time)
+                    TaskAlarmManager alarmManager = new TaskAlarmManager(AddTaskActivity.this);
+                    alarmManager.scheduleTaskReminder(task);
+                    
+                    Toast.makeText(AddTaskActivity.this, "Task added with reminder", Toast.LENGTH_SHORT).show();
                     finish(); // Close activity and return to MainActivity
                 } else {
                     Toast.makeText(AddTaskActivity.this, "Error saving task", Toast.LENGTH_SHORT).show();

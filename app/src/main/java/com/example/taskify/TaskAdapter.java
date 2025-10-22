@@ -49,26 +49,43 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.taskDetails.setText(task.getCategory() + " | " + task.getPriority() + " | " + dayOfWeek + ", " + task.getDueDate() + " " + task.getDueTime());
         holder.taskStatus.setText("Status: " + task.getStatus());
 
-        // Set status color
+        // Set status color and button state
         switch(task.getStatus()){
             case "Completed":
                 holder.taskStatus.setTextColor(Color.parseColor("#4CAF50"));
+                holder.btnMarkComplete.setEnabled(false);
+                holder.btnMarkComplete.setText("Completed");
+                holder.btnMarkComplete.setAlpha(0.6f);
                 break;
             case "Pending":
                 holder.taskStatus.setTextColor(Color.parseColor("#FFC107"));
+                holder.btnMarkComplete.setEnabled(true);
+                holder.btnMarkComplete.setText("Mark Complete");
+                holder.btnMarkComplete.setAlpha(1.0f);
                 break;
             case "Failed":
                 holder.taskStatus.setTextColor(Color.parseColor("#F44336"));
+                holder.btnMarkComplete.setEnabled(true);
+                holder.btnMarkComplete.setText("Mark Complete");
+                holder.btnMarkComplete.setAlpha(1.0f);
                 break;
         }
 
         holder.btnMarkComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (task.getStatus().equals("Completed")) {
+                    return; // Do nothing if already completed
+                }
                 TaskDBHelper db = new TaskDBHelper(context);
                 db.updateTaskStatusAndScore(task.getId(), "Completed", 1);
                 task.setStatus("Completed");
                 task.setScore(1);
+                
+                // Cancel alarm for completed task
+                TaskAlarmManager alarmManager = new TaskAlarmManager(context);
+                alarmManager.cancelTaskReminder(task.getId());
+                
                 notifyItemChanged(holder.getAdapterPosition());
             }
         });
@@ -77,6 +94,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Cancel alarm for deleted task
+                TaskAlarmManager alarmManager = new TaskAlarmManager(context);
+                alarmManager.cancelTaskReminder(task.getId());
+                
                 TaskDBHelper db = new TaskDBHelper(context);
                 db.deleteTask(task.getId());
                 int position = holder.getAdapterPosition();

@@ -66,10 +66,16 @@ public class StatsActivity extends AppCompatActivity {
             }
         }
 
+        // Calculate percentages as floats
+        int totalTasks = completed + pending + failed;
+        float completedPercent = totalTasks > 0 ? (float) completed / totalTasks * 100 : 0;
+        float pendingPercent = totalTasks > 0 ? (float) pending / totalTasks * 100 : 0;
+        float failedPercent = totalTasks > 0 ? (float) failed / totalTasks * 100 : 0;
+
         ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(completed, "Completed"));
-        entries.add(new PieEntry(pending, "Pending"));
-        entries.add(new PieEntry(failed, "Failed"));
+        entries.add(new PieEntry(completedPercent, "Completed"));
+        entries.add(new PieEntry(pendingPercent, "Pending"));
+        entries.add(new PieEntry(failedPercent, "Failed"));
 
         PieDataSet dataSet = new PieDataSet(entries, "");
         // Set explicit colors: Completed (green), Pending (yellow), Failed (red)
@@ -80,6 +86,7 @@ public class StatsActivity extends AppCompatActivity {
         dataSet.setColors(colors);
         dataSet.setSliceSpace(3f);
         dataSet.setValueTextSize(14f);
+        dataSet.setValueFormatter(new com.github.mikephil.charting.formatter.PercentFormatter());
 
         PieData data = new PieData(dataSet);
         pieChart.setUsePercentValues(true);
@@ -96,6 +103,7 @@ public class StatsActivity extends AppCompatActivity {
         pieChart.getLegend().setTextSize(14f);
         pieChart.animateY(1000);
         pieChart.invalidate();
+        // Keep bottom scores as integers
         tvScore.setText("Completed: " + completed + "  Pending: " + pending + "  Failed: " + failed);
     }
 }

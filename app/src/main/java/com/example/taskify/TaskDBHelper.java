@@ -90,6 +90,28 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         return taskList;
     }
 
+    public Task getTaskById(long id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_TASKS + " WHERE " + COL_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+        
+        Task task = null;
+        if (cursor.moveToFirst()) {
+            task = new Task(
+                cursor.getString(cursor.getColumnIndexOrThrow(COL_NAME)),
+                cursor.getString(cursor.getColumnIndexOrThrow(COL_CATEGORY)),
+                cursor.getString(cursor.getColumnIndexOrThrow(COL_PRIORITY)),
+                cursor.getString(cursor.getColumnIndexOrThrow(COL_DUEDATE)),
+                cursor.getString(cursor.getColumnIndexOrThrow(COL_DUETIME)),
+                cursor.getString(cursor.getColumnIndexOrThrow(COL_STATUS)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(COL_SCORE))
+            );
+            task.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COL_ID)));
+        }
+        cursor.close();
+        return task;
+    }
+
     public int updateTaskStatusAndScore(long id, String status, int score){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
