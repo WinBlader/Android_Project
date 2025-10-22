@@ -14,6 +14,7 @@
 - **🎨 Modern UI**: Clean, Material Design interface
 - **🌗 Theme Toggle**: Light / Dark / System theme switch with persistence
 - **🟦 App Icon**: Adaptive launcher icon with custom Taskify logo
+- **🔔 Smart Notifications**: 5-minute advance alerts with sound & vibration
 
 ## 🚀 Getting Started
 
@@ -49,6 +50,10 @@
 7. **Theme Toggle**: Tap the gear icon in the top app bar to cycle:
    - Light → Dark → System (follows device)
    - Choice is saved and applied across all screens
+8. **Task Reminders**: Get notified 5 minutes before task deadlines
+   - Rich notifications with task details and due time
+   - Sound alerts and vibration patterns
+   - Automatic cancellation for completed/deleted tasks
 
 ## 🏗️ Project Structure
 
@@ -76,6 +81,7 @@ app/
 - **UI Framework**: Material Design Components
 - **Theming**: Material3 DayNight with persistent theme preference
 - **Architecture**: Traditional Android with Activities
+- **Notifications**: AlarmManager with BroadcastReceiver for task reminders
 - **Minimum SDK**: API 21 (Android 5.0)
 - **Target SDK**: Latest Android version
 
