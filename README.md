@@ -7,7 +7,7 @@
 - **📝 Task Management**: Create, edit, and delete tasks with ease
 - **🎯 Priority System**: Organize tasks by High, Medium, and Low priority levels
 - **📅 Due Dates & Times**: Set specific deadlines for your tasks
-- **🗂️ Date Filters**: Focus on tasks scheduled for a specific day, month, or year from both the home list and stats screen
+- **🗂️ Flexible Date Filters**: Focus on tasks scheduled for a specific day, month, or year from both the home list and statistics screen
 - **📊 Task Categories**: Categorize tasks for better organization
 - **✅ Status Tracking**: Mark tasks as Complete, Pending, or Failed
 - **🔄 Auto-Failure**: Tasks automatically mark as failed when past due
@@ -57,25 +57,32 @@
    - Automatic cancellation for completed/deleted tasks
 9. **Filtering Tasks**:
    - Tap the filter chip on the home screen to view all tasks, today’s tasks, this month, this year, or choose custom ranges
-   - Statistics respect the selected filter so you can compare performance across different periods
+   - The statistics screen uses the same filter so you can compare performance across different periods at a glance
+   - Custom pickers let you choose any date, month/year combination, or standalone year
 
 ## 🏗️ Project Structure
 
 ```
 app/
 ├── src/main/java/com/example/taskify/
-│   ├── MainActivity.java          # Main activity with task list
-│   ├── AddTaskActivity.java       # Task creation interface
-│   ├── StatsActivity.java         # Statistics and analytics
-│   ├── Task.java                  # Task data model
-│   ├── TaskAdapter.java           # RecyclerView adapter
-│   ├── TaskDBHelper.java          # Database operations
-│   └── TaskAlarmManager.java      # Reminder management
+│   ├── AddTaskActivity.java        # Task creation interface
+│   ├── BaseActivity.java           # Applies the persisted theme to every screen
+│   ├── MainActivity.java           # Home screen with RecyclerView and date filters
+│   ├── StatsActivity.java          # Pie chart analytics with shared filters
+│   ├── Task.java                   # Task data model
+│   ├── TaskAdapter.java            # RecyclerView adapter and item actions
+│   ├── TaskAlarmManager.java       # Reminder scheduling helpers
+│   ├── TaskDBHelper.java           # SQLite database operations
+│   ├── TaskFilter.java             # Centralized logic for day/month/year filtering
+│   ├── TaskReminderReceiver.java   # BroadcastReceiver triggered by reminders
+│   └── ThemeManager.java           # Handles dark/light/system theme persistence
 ├── src/main/res/
-│   ├── layout/                    # UI layouts
-│   ├── values/                    # Colors, strings, styles
-│   └── drawable/                  # Icons and graphics
-└── build.gradle.kts              # App module configuration
+│   ├── layout/                     # UI layouts (activities, list items)
+│   ├── values/                     # Strings, colors, themes, styles
+│   ├── drawable/                   # Icons (including filter action) and shapes
+│   └── menu/                       # App bar menu definitions
+├── build.gradle.kts                # App module configuration
+└── settings.gradle.kts             # Gradle settings for the project
 ```
 
 ## 🛠️ Technical Details
@@ -86,6 +93,7 @@ app/
 - **Theming**: Material3 DayNight with persistent theme preference
 - **Architecture**: Traditional Android with Activities
 - **Notifications**: AlarmManager with BroadcastReceiver for task reminders
+- **Charts**: MPAndroidChart PieChart for statistics
 - **Minimum SDK**: API 21 (Android 5.0)
 - **Target SDK**: Latest Android version
 
