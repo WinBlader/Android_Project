@@ -7,4 +7,18 @@
         <item>Medium</item>
         <item>High</item>
     </string-array>
+
+    <string name="filter_all_tasks">All tasks</string>
+    <string name="filter_today">Today</string>
+    <string name="filter_this_month">This month</string>
+    <string name="filter_this_year">This year</string>
+    <string name="filter_pick_date">Pick date…</string>
+    <string name="filter_pick_month">Pick month…</string>
+    <string name="filter_pick_year">Pick year…</string>
+    <string name="filter_dialog_title">Filter tasks</string>
+    <string name="filter_select_month_title">Select month</string>
+    <string name="filter_select_year_title">Select year</string>
+    <string name="filter_action_apply">Apply</string>
+    <string name="stats_center_text">Score: %1$d</string>
+    <string name="stats_summary_counts">Completed: %1$d  Pending: %2$d  Failed: %3$d</string>
 </resources>
