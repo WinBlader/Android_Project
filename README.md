@@ -7,6 +7,7 @@
 - **📝 Task Management**: Create, edit, and delete tasks with ease
 - **🎯 Priority System**: Organize tasks by High, Medium, and Low priority levels
 - **📅 Due Dates & Times**: Set specific deadlines for your tasks
+- **🗂️ Date Filters**: Focus on tasks scheduled for a specific day, month, or year from both the home list and stats screen
 - **📊 Task Categories**: Categorize tasks for better organization
 - **✅ Status Tracking**: Mark tasks as Complete, Pending, or Failed
 - **🔄 Auto-Failure**: Tasks automatically mark as failed when past due
@@ -54,6 +55,9 @@
    - Rich notifications with task details and due time
    - Sound alerts and vibration patterns
    - Automatic cancellation for completed/deleted tasks
+9. **Filtering Tasks**:
+   - Tap the filter chip on the home screen to view all tasks, today’s tasks, this month, this year, or choose custom ranges
+   - Statistics respect the selected filter so you can compare performance across different periods
 
 ## 🏗️ Project Structure
 
